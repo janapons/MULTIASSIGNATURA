@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Multiàrea de UD i Sessions amb IA - Plantilla Oficial</title>
+    <style>
+        :root {
+            --color-principal: #2c3e50;
+            --color-accent: #16a085;
+            --color-ia: #8e44ad;
+            --fons-pantalla: #f5f6fa;
+            --fons-caixa: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fons-pantalla);
+            color: var(--color-principal);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--fons-caixa);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h1 { text-align: center; color: var(--color-principal); margin-bottom: 5px; }
+        p.subtitol { text-align: center; color: #7f8c8d; margin-bottom: 30px; }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grup-formulari { display: flex; flex-direction: column; }
+        .complet { grid-column: span 2; }
+        label { font-weight: bold; margin-bottom: 8px; font-size: 14px; }
+        
+        select, input, textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: #fff;
+        }
+
+        .btn-ia {
+            grid-column: span 2;
+            padding: 15px;
+            background-color: var(--color-ia);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-ia:hover { background-color: #732d91; }
+
+        #estat-carrega {
+            text-align: center;
+            font-weight: bold;
+            color: var(--color-ia);
+            margin: 15px 0;
+            display: none;
+        }
+
+        /* DISSENY DEL DOCUMENT FINAL DIN-A4 IMPRIMIBLE */
+        #vista-document { margin-top: 40px; border-top: 3px dashed #cbd5e1; padding-top: 30px; display: none; }
+        .boto-imprimir { background-color: #2980b9; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
+        .caixa-document { border: 2px solid #000; padding: 40px; background: white; color: #000; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+        th, td {
+            border: 1px solid #000 !important;
+            padding: 10px;
+            font-size: 14px;
+            vertical-align: top;
+            text-align: left;
+            color: #000;
+        }
+        .fons-gris { background-color: #f2f2f2; font-weight: bold; }
+        .ample-titol { width: 15%; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .contenedor > h1, p.subtitol, form, .boto-imprimir, #vista-document > h2, #estat-carrega { display: none !important; }
+            .contenedor { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+            #vista-document { border-top: none; padding-top: 0; display: block !important; }
+            .caixa-document { border: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>🤖 Generador Multidisciplinar de UD i Sessions (LOMLOE Balears)</h1>
+    <p class="subtitol">Maquetació Professional en Graella Oficial i Inclusió</p>
+
+    <form id="formulari-ia">
+        <div class="grup-formulari">
+            <label for="area-select">Àrea / Assignatura:</label>
+            <select id="area-select">
+                <option value="Llengua Catalana i Literatura">Llengua Catalana i Literatura</option>
+                <option value="Llengua Castellana i Literatura">Llengua Castellana i Literatura</option>
+                <option value="Matemàtiques">Matemàtiques</option>
+                <option value="Coneixement del Medi Natural, Social i Cultural">Coneixement del Medi Natural, Social i Cultural</option>
+                <option value="Llengua Estrangera (Anglès)">Llengua Estrangera (Anglès)</option>
+                <option value="Educació Artística: Música">Educació Artística: Música</option>
+                <option value="Educació Artística: Plàstica">Educació Artística: Plàstica</option>
+                <option value="Educació en Valors Cívics i Ètics">Educació en Valors Cívics i Ètics</option>
+                <option value="Educació Física">Educació Física</option>
+            </select>
+        </div>
+
+        <div class="grup-formulari">
+            <label for="cicle">Cicle / Curs:</label>
+            <select id="cicle">
+                <option value="Cicle Inicial (1r i 2n)">Cicle Inicial (1r i 2n)</option>
+                <option value="Cicle Mitjà (3r i 4t)">Cicle Mitjà (3r i 4t)</option>
+                <option value="Cicle Superior (5è i 6è)">Cicle Superior (5è i 6è)</option>
+            </select>
+        </div>
+
+        <div class="grup-formulari">
+            <label for="nom-ud">Nom de la Unitat Didàctica:</label>
+            <input type="text" id="nom-ud" placeholder="Ex: UD1 - Ens organitzam de nou">
+        </div>
+
+        <div class="grup-formulari">
+            <label for="durada">Durada (Sessions):</label>
+            <input type="number" id="durada" value="4" min="1">
+        </div>
+
+        <div class="grup-formulari">
+            <label for="periode">Període temporal:</label>
+            <select id="periode">
+                <option value="1r Trimestre">1r Trimestre</option>
+                <option value="2n Trimestre">2n Trimestre</option>
+                <option value="3r Trimestre">3r Trimestre</option>
+            </select>
+        </div>
+
+        <div class="grup-formulari">
+            <label for="curs-academic">Curs acadèmic:</label>
+            <input type="text" id="curs-academic" value="2026-2027">
+        </div>
+
+        <div class="grup-formulari complet">
+            <label for="mestre">Mestre/a:</label>
+            <input type="text" id="mestre" placeholder="Nom del docent">
+        </div>
+
+        <div class="grup-formulari complet">
+            <label for="documents-brut">📄 Contingut de referència o idees clau del Drive:</label>
+            <textarea id="documents-brut" rows="10" placeholder="Enganxa aquí informació del currículum, apunts vells, continguts del tema o idees d'activitats desitjades..."></textarea>
+        </div>
+
+        <button type="button" class="btn-ia" id="boto-ia">✨ Generar Unitat Didàctica Adaptada en Graella</button>
+    </form>
+
+    <div id="estat-carrega">⏳ La IA està processant els documents, adaptant l'estructura de l'àrea i creant la programació... Un moment...</div>
+
+    <div id="vista-document">
+        <h2>👀 Document Generat per la IA</h2>
+        <button class="boto-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar en PDF Din-A4</button>
+        <div class="caixa-document" id="contingut-ud"></div>
+    </div>
+</div>
+
+<script>
+    // 🔑 GUARDA AQUÍ LA TEVA CLAU DINS LES COMETES:
+    const apiKey = "AQ.Ab8RN6KgWl9XXBUeCBknyvFQCMBlhrtgBkvqxly4MCWvVmLOrg";
+
+    document.getElementById('boto-ia').onclick = async function() {
+        const btn = document.getElementById('boto-ia');
+        const assignatura = document.getElementById('area-select').value;
+        const cicle = document.getElementById('cicle').value;
+        const nomUd = document.getElementById('nom-ud').value || "Unitat Didàctica";
+        const durada = document.getElementById('durada').value;
+        const periode = document.getElementById('periode').value;
+        const cursAcademic = document.getElementById('curs-academic').value || "2026-2027";
+        const mestre = document.getElementById('mestre').value || "Docent";
+        const textBrut = document.getElementById('documents-brut').value;
+
+        if (!apiKey || apiKey === "") {
+            alert("Per favor, guarda la teva API Key a la línia 181 del codi.");
+            return;
+        }
+        if (!textBrut) {
+            alert("Per favor, enganxa algun text de referència o idees de contingut.");
+            return;
+        }
+
+        btn.innerText = "⏳ Processant petició...";
+        btn.style.backgroundColor = "#7f8c8d";
+        document.getElementById('estat-carrega').style.display = 'block';
+        document.getElementById('vista-document').style.display = 'none';
+
+        const promptSystem = "Genera una Unitat Didàctica completa en català correcte i formal adaptada a l'àrea de: " + assignatura + ". Tot el document ha d'estar en codi HTML net i polit, ideal per imprimir en folis blancs, amb vores de línia negra dures (border: 1px solid #000). Prohibits els gràfics o dibuixos de lletres. Usa les dades: Cicle: " + cicle + ", Nom de la UD: " + nomUd + ", Durada: " + durada + " sessions, Període: " + periode + ", Curs acadèmic: " + cursAcademic + ", Mestre/a: " + mestre + ". REQUISITS ORTOGRÀFICS: PROHIBIT utilitzar la paraula 'gaudi' o derivats en cap text o rúbrica. Fes servir 'plaer', 'gaubança', 'satisfacció' o formes verbals com 'gaudir de' o 'xalar'. REQUISITS DE MAQUETACIÓ I CONTINGUT STRICTES: 1. LA PRIMERA PARTE EN GRAELLA TÈCNICA EXACTA: Crea una taula inicial que ocupi tota l'amplada amb 4 columnes reals per creuar perfectament les dades de forma horitzontal i simètrica. L'estructura de files ha de ser: Fila 1: Cel·la 1 (classe 'fons-gris ample-titol') text 'ÀREA', Cel·la 2 text '" + assignatura + "', Cel·la 3 (classe 'fons-gris ample-titol') text 'GRUP', Cel·la 4 text '" + cicle + "'; Fila 2: Cel·la 1 (classe 'fons-gris ample-titol') text 'DURADA', Cel·la 2 text '" + durada + " Sessions', Cel·la 3 (classe 'fons-gris ample-titol') text 'PERÍODE', Cel·la 4 text '" + periode + "'; Fila 3: Cel·la 1 (classe 'fons-gris ample-titol') text 'CURS', Cel·la 2 text '" + cursAcademic + "', Cel·la 3 (classe 'fons-gris ample-titol') text 'MESTRE/A', Cel·la 4 text '" + mestre + "'. 2. TÍTOL DE LA UD I DESCRIPCIÓ JUSTIFICATIVA formal en un bloc seguit. 3. OBJECTIUS D'APRENENTATGE: Llista neta sense etiquetes OL, directament codi text net com: '01. [Descripció]'. 4. CURRÍCULUM EN DUES COLUMNES ACARADES: Una taula de dues columnes on l'esquerra (ample 50%) és 'Criteris d'Avaluació' i la de la dreta (ample 50%) és 'Sabers Bàsics Associats'. Cada fila ha de creuar horitzontalment un criteri oficial de l'àrea (començant directe pel codi oficial tipus CE.1.1.) amb els seus sabers corresponents de l'àrea " + assignatura + ". 5. INSTRUMENTS D'AVALUACIÓ: Detalla en un bloc o taula a sota els instruments de l'àrea (ex: portafolis, quadern, llista de control, projecte final). 6. DESENVOLUPAMENT DE LES SESSIONS ADAPTATIVES: Cada una de les " + durada + " sessions ha d'anar en una TAULA INDEPENDENT de dues columnes, amb un disseny molt detallat de les activitats (explicant normes, tasques i rols de l'alumne). L'estructura interna de temps s'ha d'adaptar al tipus d'assignatura triat: A) SI L'ÀREA ÉS 'Educació Física', l'estructura ha de ser: Fila d'encapçalament (fons gris): SÈSSIO X: [Títol]; Fila 1: Cel·la esquerra 'Activitat Inicial T10'' i cel·la dreta contingut; Fila 2: Cel·la esquerra 'Part Principal T40'' i cel·la dreta contingut molt detallat (3 o 4 jocs); Fila 3: Cel·la esquerra 'Síntesi T10'' i cel·la dreta tornada a la calma. B) PER A QUALSEVOL ALTRA ÀREA (Matemàtiques, Llengües, Medi...), l'estructura de la taula ha de ser: Fila d'encapçalament (fons gris): SÈSSIO X: [Títol de la lliçó/sessió d'aula]; Fila 1: Cel·la esquerra 'Inici (10 min)' i cel·la dreta (rutina de pensament, motivació o activació prèvia); Fila 2: Cel·la esquerra 'Desenvolupament (40 min)' i cel·la dreta (contingut molt a fons del tema de la sessió, activitat cooperativa, manipulativa o exercicis explicats amb detall); Fila 3: Cel·la esquerra 'Tancament (10 min)' i cel·la dreta (metacognició, reflexió final o repàs). A TOTS ELS CASOS, la Fila 4 de la taula serà: Cel·la esquerra 'Atenció a la diversitat / Inclusió' i cel·la dreta variants pràctiques d'aula per a diferents ritmes. 7. TAULA DE RÚBRICA D'AVALUACIÓ FINAL en 4 nivells nets: Criteri, Excel·lent (2), Notable (1.5), Satisfactori (1), No Assoliment (0). Retorna exclusivament el codi HTML de contingut sense cap etiqueta de codi markdown tipus ```html ni ```.";
+
+        try {
+            const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
+            
+            const response = await window.fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptSystem + "\n\nINFORMACIÓ DE REFERÈNCIA DEL MESTRE:\n" + textBrut }] }]
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error ? errorData.error.message : "Error de connexió");
+            }
+
+            const data = await response.json();
+            
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                let textIAGenerat = data.candidates[0].content.parts[0].text;
+                textIAGenerat = textIAGenerat.replace(/```html/gi, "").replace(/```/g, "").trim();
+
+                const contenedorDocumento = document.getElementById('contingut-ud');
+                contenedorDocumento.innerHTML = textIAGenerat;
+
+                document.getElementById('estat-carrega').style.display = 'none';
+                document.getElementById('vista-document').style.display = 'block';
+                document.getElementById('vista-document').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                throw new Error("Dades buides.");
+            }
+
+        } catch (error) {
+            document.getElementById('estat-carrega').style.display = 'none';
+            alert("🚨 Error en processar: " + error.message);
+        } finally {
+            btn.innerText = "✨ Generar Unitat Didàctica Adaptada en Graella";
+            btn.style.backgroundColor = "var(--color-ia)";
+        }
+    };
+</script>
+
+</body>
+</html>
